@@ -12,6 +12,7 @@ import {
   StandardMaterial,
   Vector3
 } from '@babylonjs/core';
+import '@babylonjs/inspector';
 
 
 export class BasicRenderServiceAbstract {
@@ -31,7 +32,7 @@ export class BasicRenderServiceAbstract {
     this.engine = new Engine(this.canvas, true);
 
     this.scene = new Scene(this.engine);
-    this.scene.clearColor = new Color4(0.5, 0.5, 0.5, 1);
+    this.scene.clearColor = new Color4(.1, .1, .1, 1);
 
     this.camera = new FreeCamera('camera1', new Vector3(5, 10, -20), this.scene);
     this.camera.setTarget(Vector3.Zero());
@@ -43,19 +44,30 @@ export class BasicRenderServiceAbstract {
     this.showWorldAxis(8);
   }
 
-  animate(): void {
-    this.ngZone.runOutsideAngular(() => {
-      window.addEventListener('DOMContentLoaded', () => {
-        this.engine.runRenderLoop(() => {
-          this.scene.render();
-        });
-      });
+  animate(inZone = true): void {
 
-      window.addEventListener('resize', () => {
-        this.engine.resize();
+    if (inZone) {
+      this.ngZone.runOutsideAngular(() => {
+        this.startTheEngine();
+      });
+    } else {
+      this.startTheEngine();
+    }
+
+  }
+
+  private startTheEngine() {
+    window.addEventListener('DOMContentLoaded', () => {
+      this.engine.runRenderLoop(() => {
+        this.scene.render();
       });
     });
+
+    window.addEventListener('resize', () => {
+      this.engine.resize();
+    });
   }
+
 
   /**
    * Source: https://doc.babylonjs.com/snippets/world_axes
@@ -117,4 +129,5 @@ export class BasicRenderServiceAbstract {
     const zChar = makeTextPlane('Z', 'blue', size / 10);
     zChar.position = new Vector3(0, 0.05 * size, 0.9 * size);
   }
+
 }
