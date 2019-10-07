@@ -4,11 +4,13 @@ import {NgModule, NgZone} from '@angular/core';
 import { AppComponent } from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import { NaiveComponent } from './scenes/naive/naive.component';
+import { MeshOptimizedComponent } from './scenes/mesh-optimized/mesh-optimized.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NaiveComponent
+    NaiveComponent,
+    MeshOptimizedComponent
   ],
   imports: [
     BrowserModule,

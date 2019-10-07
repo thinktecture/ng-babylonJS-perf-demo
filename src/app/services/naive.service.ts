@@ -1,7 +1,8 @@
 import {ElementRef, Injectable, NgZone} from '@angular/core';
 import {BasicRenderServiceAbstract} from './basic-render-service.abstract';
-import {Color3, Mesh, MeshBuilder, PointLight, Scene, Space, StandardMaterial, Vector3} from '@babylonjs/core';
+import {Animation, Color3, Matrix, Mesh, MeshBuilder, PointLight, Scene, Space, StandardMaterial, Vector3} from '@babylonjs/core';
 
+const FPS = 60;
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,23 @@ export class NaiveService extends BasicRenderServiceAbstract {
 
   sun: Mesh;
 
+  readonly rotationAnim = new Animation('rotate', 'rotation.y', FPS, Animation.ANIMATIONTYPE_FLOAT, Animation.ANIMATIONLOOPMODE_CYCLE);
+  readonly wobbleAnim = new Animation('wobble', 'position.y', FPS, Animation.ANIMATIONTYPE_FLOAT, Animation.ANIMATIONLOOPMODE_RELATIVE);
+  readonly rotationKeys = [
+    {frame: 0, value: 0},
+    {frame: FPS / 2, value: Math.PI},
+    {frame: FPS, value: Math.PI * 2},
+  ];
+  readonly wobbleKeys = [
+    {frame: 0, value: -1},
+    {frame: FPS * .5, value: 1},
+    {frame: FPS, value: -1},
+  ];
+
   constructor(readonly zone: NgZone) {
     super(zone);
+    this.rotationAnim.setKeys(this.rotationKeys);
+    this.wobbleAnim.setKeys(this.wobbleKeys);
   }
 
   createScene(canvas: ElementRef<HTMLCanvasElement>): Scene {
@@ -37,5 +53,22 @@ export class NaiveService extends BasicRenderServiceAbstract {
 
   getScene(): Scene {
     return this.scene;
+  }
+
+  createPlanetInSystem(name, diameter, distance, color: [number, number, number]) {
+    const offY = -1 + Math.random();
+    const mesh = MeshBuilder.CreateSphere(name, {diameter, segments: 16}, this.scene);
+    mesh.parent = this.sun;
+    mesh.setPivotMatrix(Matrix.Translation(distance, -offY, 0), false);
+    mesh.rotation.y = Math.PI * Math.random();
+    mesh.animations = [];
+    mesh.animations.push(this.rotationAnim);
+    mesh.animations.push(this.wobbleAnim);
+    if (color) {
+      const sphereMaterial = new StandardMaterial(name, this.scene);
+      sphereMaterial.diffuseColor = new Color3(color[0], color[1], color[2]);
+      mesh.material = sphereMaterial;
+    }
+    return mesh;
   }
 }
