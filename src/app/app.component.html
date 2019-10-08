@@ -1,9 +1,14 @@
-<div class="nav">
-  <a [routerLink]="['naive']">1. Naive</a> -
-  <a [routerLink]="['meshOpti']">2. Add mesh optimization to 1.</a>-
-  <a [routerLink]="['instanceOpti']">3. Mesh instances optimization to 2.</a>
+<span id="prefToggle" (click)="showPrefPane = !showPrefPane">&#9776;</span>
+<div class="container" [class.slim]="showPrefPane">
+  <div class="nav">
+    <a [routerLink]="['naive']">1. Naive</a> -
+    <a [routerLink]="['meshOpti']">2. Add mesh optimization to 1.</a>-
+    <a [routerLink]="['instanceOpti']">3. Mesh instances optimization to 2.</a>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="prefPane">
+    <app-preference-pane></app-preference-pane>
+  </div>
 </div>
-<div class="content">
-  <router-outlet></router-outlet>
-</div>
-<div class="prefPane"></div>

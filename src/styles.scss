@@ -1,3 +1,6 @@
+@import '@angular/material/prebuilt-themes/purple-green.css';
+
+
 /* You can add global styles to this file, and also import other style files */
 body {
   height: 100vh;
@@ -5,30 +8,62 @@ body {
   margin: 0;
 }
 
-app-root {
+.container {
   height: 100%;
   width: 100%;
   display: grid;
   grid-template-rows: 3rem auto;
   grid-template-columns: auto 20rem;
-}
-.content {
-  grid-column: 1;
-  grid-row: 2;
+
+  &.slim {
+    grid-template-rows: 3rem auto;
+    grid-template-columns: auto 0;
+  }
+
+  .content {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .nav {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row: 1;
+  }
+
+  .prefPane {
+    grid-column: 2;
+    grid-row: 2;
+    overflow: scroll;
+  }
+
+
 }
 
-.nav {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row: 1;
-}
-
-.prefPane {
-  grid-column: 2;
-  grid-row: 2;
+#prefToggle {
+  position: fixed;
+  top: 4rem;
+  right: 1rem;
+  font-size: 3rem;
+  line-height: 3rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: white solid 1px;
+  border-radius: 0.5rem;
+  padding: 0 0.5rem;
+  background-color: white;
 }
 
 .wrapper {
   height: 100%;
   width: 100%;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
