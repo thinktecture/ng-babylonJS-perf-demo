@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractMesh, Mesh, MeshBuilder, Scene} from '@babylonjs/core';
 import {NaiveComponent} from '../naive/naive.component';
 
@@ -13,34 +13,57 @@ export class MeshOptimizedComponent extends NaiveComponent {
     const scene = this.naive.createScene(this.canvasRef);
     scene.blockfreeActiveMeshesAndRenderingGroups = true;
     this.addPlanets(scene);
-    this.addAsteroids(scene);
-    scene.freezeActiveMeshes(); // 5-10 fps
-    scene.freezeMaterials(); // 1-5 fps
     scene.blockfreeActiveMeshesAndRenderingGroups = false;
   }
 
-  addAsteroids(scene: Scene) {
-
-    const baseSphere = MeshBuilder.CreateSphere('BaseSphere', {segments: 1, diameter: 1}, scene);
-    baseSphere.convertToUnIndexedMesh(); // TEUER BEI VIELEN MESHES - 1-3fps
-    baseSphere.convertToFlatShadedMesh(); // TEUER BEI VIELEN MESHES - 1-3fps
+  getBaseSphere(suffix = ''): Mesh {
+    const baseSphere = MeshBuilder.CreateSphere('BaseSphere' + suffix, {
+      segments: this.asteroidConfig.segments,
+      diameter: 1
+    }, this.naive.scene);
+    if (this.meshConfig.index) {
+      baseSphere.convertToUnIndexedMesh();
+    } // TEUER BEI VIELEN MESHES - 1-3fps
+    if (this.meshConfig.flat) {
+      baseSphere.convertToFlatShadedMesh();
+    } // TEUER BEI VIELEN MESHES - 1-3fps
     baseSphere.cullingStrategy = AbstractMesh.CULLINGSTRATEGY_OPTIMISTIC_INCLUSION_THEN_BSPHERE_ONLY;
     baseSphere.isVisible = false;
-    baseSphere.freezeNormals();
-    baseSphere.disableEdgesRendering();
-    baseSphere.doNotSyncBoundingInfo = true; // 5-10 fps;
+    if (this.meshConfig.normals) {
+      baseSphere.freezeNormals();
+    }
+    if (this.meshConfig.edge) {
+      baseSphere.disableEdgesRendering();
+    }
+    if (this.meshConfig.boundings) {
+      baseSphere.doNotSyncBoundingInfo = true;
+    } // 5-10 fps;
+    this.naive.addRandomMaterial(baseSphere);
+    return baseSphere;
+  }
 
-    const asteroids = [];
-    for (let i = 0; i < 4000; i++) {
+  addAsteroids(scene: Scene, amount: number) {
+    const baseSphere = this.getBaseSphere();
+
+    for (let i = 0; i < amount; i++) {
       const asteroid = baseSphere.clone('instance' + i);
-      this.naive.addRandomMaterial(asteroid);
+      this.asteroids.push(asteroid);
       this.naive.makeAsteroid(asteroid, i);
       asteroid.isVisible = true;
     }
 
+    if (!this.meshConfig.merge) {
+      return;
+    }
+    // TODO better slicing
     // Mesh.MergeMeshes(asteroids, true, true); // TEUER!
-    for (let i = 0; i < asteroids.length; i += 500) { // DAS KLAPPT :)  5 - 10 fps
-      Mesh.MergeMeshes(asteroids.slice(i, i + 500), true);
+    const groupSize = 300;
+    for (let i = 0; i < this.asteroids.length; i += groupSize) { // DAS KLAPPT :)  5 - 10 fps
+      const upper = i + groupSize > this.asteroids.length ? this.asteroids.length : i + groupSize;
+      const mergedMesh  = Mesh.MergeMeshes(this.asteroids.slice(i, upper) as Mesh[], true);
+      mergedMesh.parent = this.naive.sun;
+      this.naive.addRandomMaterial(mergedMesh);
+
     }
   }
 }

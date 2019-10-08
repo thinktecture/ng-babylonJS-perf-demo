@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MeshOptimizedComponent} from '../mesh-optimized/mesh-optimized.component';
 import {AbstractMesh, MeshBuilder, Scene} from '@babylonjs/core';
 
@@ -9,21 +9,17 @@ import {AbstractMesh, MeshBuilder, Scene} from '@babylonjs/core';
 })
 export class MeshInstancesComponent extends MeshOptimizedComponent {
 
-  addAsteroids(scene: Scene) {
+  addAsteroids(scene: Scene, amount: number) {
     const bases = [];
     // create 4 different meshes
     for (let i = 0; i < 6; i++) {
-      const base = MeshBuilder.CreateSphere('BaseSphere', {segments: 1, diameter: 1}, scene);
-      base.convertToUnIndexedMesh(); // TEUER BEI VIELEN MESHES - 1-3fps
-      base.convertToFlatShadedMesh(); // TEUER BEI VIELEN MESHES - 1-3fps
-      base.cullingStrategy = AbstractMesh.CULLINGSTRATEGY_OPTIMISTIC_INCLUSION_THEN_BSPHERE_ONLY;
-      this.naive.addRandomMaterial(base);
-      base.freezeNormals();
+      const base = this.getBaseSphere();
       bases.push(base);
     }
 
-    for (let i = 0; i < 4000; i++) {
+    for (let i = 0; i < amount; i++) {
       const asteroid = bases[i % 6].createInstance('instance' + i);
+      this.asteroids.push(asteroid);
       this.naive.makeAsteroid(asteroid, i);
     }
   }

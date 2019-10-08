@@ -44,6 +44,11 @@ export class NaiveService extends BasicRenderServiceAbstract {
   }
 
   createScene(canvas: ElementRef<HTMLCanvasElement>): Scene {
+
+    if (this.scene) {
+      this.scene.dispose();
+    }
+
     super.createScene(canvas);
 
     // this.light.dispose();

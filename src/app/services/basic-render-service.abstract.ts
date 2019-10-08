@@ -17,10 +17,11 @@ import '@babylonjs/inspector';
 
 export class BasicRenderServiceAbstract {
   protected engine: Engine;
-  protected scene: Scene;
   protected canvas: HTMLCanvasElement;
   protected camera: FreeCamera;
   protected light: Light;
+
+  scene: Scene;
 
   public constructor(private readonly ngZone: NgZone) {
   }
@@ -56,17 +57,15 @@ export class BasicRenderServiceAbstract {
   }
 
   stop(): void {
-    window.removeEventListener('DOMContentLoaded', () => {
-      this.scene.dispose();
-      this.engine.stopRenderLoop();
-      this.engine.dispose();
-    });
+    this.scene.dispose();
+    this.engine.stopRenderLoop();
+    this.engine.dispose();
     window.removeEventListener('resize', () => {
     });
   }
 
   private startTheEngine() {
-    window.addEventListener('DOMContentLoaded', () => this.engine.runRenderLoop(() => this.scene.render()));
+    this.engine.runRenderLoop(() => this.scene.render());
     window.addEventListener('resize', () => this.engine.resize());
   }
 
