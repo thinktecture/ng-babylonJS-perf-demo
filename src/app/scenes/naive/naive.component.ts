@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {NaiveService} from '../../services/naive.service';
 import {MeshBuilder, Scene} from '@babylonjs/core';
 
@@ -9,7 +9,7 @@ const FPS = 60;
   templateUrl: './naive.component.html',
   styleUrls: ['./naive.component.scss']
 })
-export class NaiveComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NaiveComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('rCanvas', {static: true})
   canvasRef: ElementRef<HTMLCanvasElement>;
@@ -17,7 +17,7 @@ export class NaiveComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(protected readonly naive: NaiveService) {
   }
 
-  ngOnInit() {
+  initScene() {
     const scene = this.naive.createScene(this.canvasRef);
     scene.blockfreeActiveMeshesAndRenderingGroups = true;
     this.addPlanets(scene);
@@ -27,6 +27,7 @@ export class NaiveComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    this.initScene();
     this.naive.start(true);
   }
 

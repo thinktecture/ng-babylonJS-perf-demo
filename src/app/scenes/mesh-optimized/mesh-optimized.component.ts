@@ -7,9 +7,9 @@ import {NaiveComponent} from '../naive/naive.component';
   templateUrl: './mesh-optimized.component.html',
   styleUrls: ['./mesh-optimized.component.scss']
 })
-export class MeshOptimizedComponent extends NaiveComponent implements OnInit {
+export class MeshOptimizedComponent extends NaiveComponent {
 
-  ngOnInit() {
+  initScene() {
     const scene = this.naive.createScene(this.canvasRef);
     scene.blockfreeActiveMeshesAndRenderingGroups = true;
     this.addPlanets(scene);

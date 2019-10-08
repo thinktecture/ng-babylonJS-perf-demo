@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MeshOptimizedComponent} from '../mesh-optimized/mesh-optimized.component';
-import {AbstractMesh, Axis, Matrix, MeshBuilder, Scene, Space, Vector3} from '@babylonjs/core';
+import {AbstractMesh, MeshBuilder, Scene} from '@babylonjs/core';
 
 @Component({
   selector: 'app-mesh-optimized',
   templateUrl: './mesh-instances.component.html',
   styleUrls: ['./mesh-instances.component.scss']
 })
-export class MeshInstancesComponent extends MeshOptimizedComponent implements OnInit {
+export class MeshInstancesComponent extends MeshOptimizedComponent {
 
   addAsteroids(scene: Scene) {
     const bases = [];
