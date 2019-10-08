@@ -6,6 +6,9 @@ import {AppRoutingModule} from './app-routing.module';
 import {NaiveComponent} from './scenes/naive/naive.component';
 import {MeshOptimizedComponent} from './scenes/mesh-optimized/mesh-optimized.component';
 import {MeshInstancesComponent} from './scenes/material-optimized/mesh-instances.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatCardModule, MatInputModule, MatSliderModule, MatSlideToggleModule} from '@angular/material';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,12 @@ import {MeshInstancesComponent} from './scenes/material-optimized/mesh-instances
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatSliderModule,
+    MatInputModule,
+    MatCardModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
