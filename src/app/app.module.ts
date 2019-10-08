@@ -6,6 +6,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {NaiveComponent} from './scenes/naive/naive.component';
 import {MeshOptimizedComponent} from './scenes/mesh-optimized/mesh-optimized.component';
 import {MeshInstancesComponent} from './scenes/material-optimized/mesh-instances.component';
+import {PreferencePaneComponent} from './components/preference-pane/preference-pane.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCardModule, MatInputModule, MatSliderModule, MatSlideToggleModule} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -16,6 +17,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     NaiveComponent,
     MeshOptimizedComponent,
     MeshInstancesComponent,
+    PreferencePaneComponent,
   ],
   imports: [
     BrowserModule,
