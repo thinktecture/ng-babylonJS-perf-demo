@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+app-root {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 3rem auto;
+  grid-template-columns: auto 20rem;
+}
+.content {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.nav {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row: 1;
+}
+
+.prefPane {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+}
