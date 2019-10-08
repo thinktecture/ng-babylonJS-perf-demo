@@ -44,7 +44,7 @@ export class BasicRenderServiceAbstract {
     this.showWorldAxis(8);
   }
 
-  animate(inZone = true): void {
+  start(inZone = true): void {
 
     if (inZone) {
       this.ngZone.runOutsideAngular(() => {
@@ -53,19 +53,21 @@ export class BasicRenderServiceAbstract {
     } else {
       this.startTheEngine();
     }
+  }
 
+  stop(): void {
+    window.removeEventListener('DOMContentLoaded', () => {
+      this.scene.dispose();
+      this.engine.stopRenderLoop();
+      this.engine.dispose();
+    });
+    window.removeEventListener('resize', () => {
+    });
   }
 
   private startTheEngine() {
-    window.addEventListener('DOMContentLoaded', () => {
-      this.engine.runRenderLoop(() => {
-        this.scene.render();
-      });
-    });
-
-    window.addEventListener('resize', () => {
-      this.engine.resize();
-    });
+    window.addEventListener('DOMContentLoaded', () => this.engine.runRenderLoop(() => this.scene.render()));
+    window.addEventListener('resize', () => this.engine.resize());
   }
 
 

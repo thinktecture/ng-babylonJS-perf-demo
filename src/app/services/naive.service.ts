@@ -1,6 +1,19 @@
 import {ElementRef, Injectable, NgZone} from '@angular/core';
 import {BasicRenderServiceAbstract} from './basic-render-service.abstract';
-import {Animation, Color3, Matrix, Mesh, MeshBuilder, PointLight, Scene, Space, StandardMaterial, Vector3} from '@babylonjs/core';
+import {
+  Animation,
+  Axis,
+  Color3,
+  InstancedMesh,
+  Matrix,
+  Mesh,
+  MeshBuilder,
+  PointLight,
+  Scene,
+  Space,
+  StandardMaterial,
+  Vector3
+} from '@babylonjs/core';
 
 const FPS = 60;
 
@@ -51,10 +64,6 @@ export class NaiveService extends BasicRenderServiceAbstract {
     return this.scene;
   }
 
-  getScene(): Scene {
-    return this.scene;
-  }
-
   createPlanetInSystem(name, diameter, distance, color: [number, number, number]) {
     const offY = -1 + Math.random();
     const mesh = MeshBuilder.CreateSphere(name, {diameter, segments: 16}, this.scene);
@@ -70,5 +79,20 @@ export class NaiveService extends BasicRenderServiceAbstract {
       mesh.material = sphereMaterial;
     }
     return mesh;
+  }
+
+  addRandomMaterial(mesh: Mesh) {
+    const sphereMaterial = new StandardMaterial('ranMat' + Math.random(), this.scene);
+    sphereMaterial.diffuseColor = new Color3(Math.random(), Math.random(), Math.random()).scale(.5);
+    mesh.material = sphereMaterial;
+  }
+
+  makeAsteroid(mesh: Mesh | InstancedMesh, nth: number) {
+    mesh.scaling = new Vector3(0.1, 0.1, 0.1);
+    mesh.translate(Axis.Y, Math.random() * 1.3 - 1, Space.WORLD);
+    mesh.translate(Axis.X, Math.random(), Space.WORLD);
+    mesh.parent = this.sun;
+    mesh.setPivotMatrix(Matrix.Translation(-90, 0, 0), false);
+    mesh.rotate(Axis.Y, Math.PI / 2 * nth * Math.random());
   }
 }
