@@ -46,7 +46,7 @@ export class NaiveService extends BasicRenderServiceAbstract {
   createScene(canvas: ElementRef<HTMLCanvasElement>): Scene {
     super.createScene(canvas);
 
-    this.light.dispose();
+    // this.light.dispose();
     this.light = new PointLight('sun', new Vector3(0, 0, 0), this.scene);
     this.sun = MeshBuilder.CreateSphere('s1', {segments: 32, diameter: 2});
     const sphereMaterial = new StandardMaterial('sun_surface', this.scene);
