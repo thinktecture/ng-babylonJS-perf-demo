@@ -129,6 +129,7 @@ export class BasicRenderServiceAbstract {
     this.scene.dispose();
     this.engine.stopRenderLoop();
     this.engine.dispose();
+    this.camera.dispose();
     window.removeEventListener('resize', () => {
     });
   }

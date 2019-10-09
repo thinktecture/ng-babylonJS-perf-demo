@@ -54,7 +54,7 @@ export class NaiveComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.naive.start(true);
+    this.naive.start(this.preferences.useNgZone.getValue());
   }
 
   ngOnDestroy(): void {
@@ -66,35 +66,37 @@ export class NaiveComponent implements AfterViewInit, OnDestroy, OnInit {
     this.naive.scene.unfreezeActiveMeshes();
     this.naive.scene.unfreezeMaterials();
     this.naive.scene.blockfreeActiveMeshesAndRenderingGroups = this.meshConfig.batch;
-    this.loading.message$.next('Remove Asteroids ...');
-    this.asteroids.slice().forEach((asteroid, i) => {
-      asteroid.dispose();
-      this.asteroids.pop();
-    });
-
+    this.clearAsteroids();
     this.loading.message$.next('Add Asteroids ...');
     // due to the possible blocking calculation a timeout is needed to display the message
     setTimeout(() => {
-
       this.addAsteroids(this.naive.scene, this.asteroidConfig.amount);
 
       if (this.meshConfig.freeze) {
         this.loading.message$.next('Freeze Meshes ...');
         this.naive.scene.freezeActiveMeshes(); // 5-10 fps
       }
-      this.naive.scene.freeActiveMeshes(); // better dispose
+      // this.naive.scene.freeActiveMeshes(); // better dispose
       this.naive.scene.blockfreeActiveMeshesAndRenderingGroups = false;
       this.loading.message$.next(null);
     }, 30);
 
   }
 
+  clearAsteroids() {
+    this.loading.message$.next('Remove Asteroids ...');
+    this.asteroids.slice().forEach((asteroid) => {
+      asteroid.dispose();
+      this.asteroids.pop();
+    });
+  }
+
   addAsteroids(scene: Scene, amount: number) {
     for (let i = 0; i < amount; i++) {
       const s = MeshBuilder.CreateSphere(`sphere${i}`, {segments: this.asteroidConfig.segments, diameter: 1}, scene);
-      this.asteroids.push(s);
       this.naive.addRandomMaterial(s);
       this.naive.makeAsteroid(s, i);
+      this.asteroids.push(s);
       s.isVisible = true;
     }
   }
