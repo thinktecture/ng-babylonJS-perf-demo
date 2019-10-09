@@ -77,7 +77,7 @@ export class BasicRenderServiceAbstract {
     };
 
     this.camera = new ArcRotateCamera('Camera', 0, 0.8, 35, Vector3.Zero(), this.scene);
-    this.camera.setTarget(Vector3.Zero());
+    this.camera.setTarget(this.rootMesh);
 
 
     canvas.nativeElement.addEventListener('pointerdown', (evt) => {
@@ -135,7 +135,14 @@ export class BasicRenderServiceAbstract {
   }
 
   private startTheEngine() {
-    this.engine.runRenderLoop(() => this.scene.render());
+    let freshRender = true;
+    this.engine.runRenderLoop(() => {
+      this.scene.render();
+      if (freshRender) {
+        this.engine.resize();
+        freshRender = false;
+      }
+    });
     window.addEventListener('resize', () => this.engine.resize());
   }
 
