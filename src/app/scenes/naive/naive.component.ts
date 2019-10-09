@@ -5,6 +5,7 @@ import {PreferenceService} from '../../services/preference.service';
 import {combineLatest, Subject} from 'rxjs';
 import {debounceTime, takeUntil} from 'rxjs/operators';
 import {AsteroidConfiguration, MeshConfiguration} from '../../models';
+import {LoadingService} from '../../services/loading.service';
 
 const FPS = 60;
 
@@ -22,10 +23,14 @@ export class NaiveComponent implements AfterViewInit, OnDestroy, OnInit {
   protected meshConfig: MeshConfiguration;
   protected readonly asteroids: AbstractMesh[] = [];
 
-  constructor(protected readonly naive: NaiveService, protected readonly preferences: PreferenceService) {
+  constructor(
+    protected readonly naive: NaiveService,
+    protected readonly preferences: PreferenceService,
+    protected readonly loading: LoadingService) {
   }
 
   ngOnInit(): void {
+    this.loading.message$.next('Initialising Scene ...');
     this.initScene();
 
     combineLatest(this.preferences.asteroidConfig, this.preferences.meshConfig).pipe(takeUntil(this.destroy), debounceTime(400))
@@ -38,8 +43,6 @@ export class NaiveComponent implements AfterViewInit, OnDestroy, OnInit {
     this.preferences.materialConfig.pipe(takeUntil(this.destroy)).subscribe(conf => conf.freeze
       ? this.naive.scene.freezeMaterials()
       : this.naive.scene.unfreezeMaterials());
-
-
   }
 
   initScene() {
@@ -59,20 +62,31 @@ export class NaiveComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   manageAsteroids() {
+    this.loading.message$.next('Manage Asteroids ...');
     this.naive.scene.unfreezeActiveMeshes();
     this.naive.scene.unfreezeMaterials();
     this.naive.scene.blockfreeActiveMeshesAndRenderingGroups = this.meshConfig.batch;
+    this.loading.message$.next('Remove Asteroids ...');
     this.asteroids.slice().forEach((asteroid, i) => {
       asteroid.dispose();
       this.asteroids.pop();
     });
-    this.addAsteroids(this.naive.scene, this.asteroidConfig.amount);
 
-    if (this.meshConfig.freeze) {
-      this.naive.scene.freezeActiveMeshes(); // 5-10 fps
-    }
-    this.naive.scene.freeActiveMeshes(); // better dispose
-    this.naive.scene.blockfreeActiveMeshesAndRenderingGroups = false;
+    this.loading.message$.next('Add Asteroids ...');
+    // due to the possible blocking calculation a timeout is needed to display the message
+    setTimeout(() => {
+
+      this.addAsteroids(this.naive.scene, this.asteroidConfig.amount);
+
+      if (this.meshConfig.freeze) {
+        this.loading.message$.next('Freeze Meshes ...');
+        this.naive.scene.freezeActiveMeshes(); // 5-10 fps
+      }
+      this.naive.scene.freeActiveMeshes(); // better dispose
+      this.naive.scene.blockfreeActiveMeshesAndRenderingGroups = false;
+      this.loading.message$.next(null);
+    }, 30);
+
   }
 
   addAsteroids(scene: Scene, amount: number) {

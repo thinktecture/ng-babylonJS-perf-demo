@@ -1,0 +1,23 @@
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.backdrop {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(33, 33, 33, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  p {
+    color: white;
+    font-weight: 700;
+    width: 100%;
+    text-align: center;
+  }
+}

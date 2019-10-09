@@ -45,6 +45,7 @@ export class MeshOptimizedComponent extends NaiveComponent {
   addAsteroids(scene: Scene, amount: number) {
     const baseSphere = this.getBaseSphere();
 
+    this.loading.message$.next('Add Asteroids ...');
     for (let i = 0; i < amount; i++) {
       const asteroid = baseSphere.clone('instance' + i);
       this.asteroids.push(asteroid);
@@ -57,13 +58,13 @@ export class MeshOptimizedComponent extends NaiveComponent {
     }
     // TODO better slicing
     // Mesh.MergeMeshes(asteroids, true, true); // TEUER!
+    this.loading.message$.next('Grouping Asteroids ...');
     const groupSize = 300;
     for (let i = 0; i < this.asteroids.length; i += groupSize) { // DAS KLAPPT :)  5 - 10 fps
       const upper = i + groupSize > this.asteroids.length ? this.asteroids.length : i + groupSize;
       const mergedMesh  = Mesh.MergeMeshes(this.asteroids.slice(i, upper) as Mesh[], true);
       mergedMesh.parent = this.naive.sun;
       this.naive.addRandomMaterial(mergedMesh);
-
     }
   }
 }

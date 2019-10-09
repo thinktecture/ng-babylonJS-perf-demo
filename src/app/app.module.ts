@@ -12,12 +12,13 @@ import {
   MatButtonModule,
   MatCardModule,
   MatInputModule,
-  MatMenuModule,
+  MatMenuModule, MatProgressSpinnerModule,
   MatSliderModule,
   MatSlideToggleModule,
   MatToolbarModule
 } from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     MeshOptimizedComponent,
     MeshInstancesComponent,
     PreferencePaneComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatMenuModule,
     MatButtonModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
