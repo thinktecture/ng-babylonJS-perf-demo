@@ -8,7 +8,15 @@ import {MeshOptimizedComponent} from './scenes/mesh-optimized/mesh-optimized.com
 import {MeshInstancesComponent} from './scenes/material-optimized/mesh-instances.component';
 import {PreferencePaneComponent} from './components/preference-pane/preference-pane.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatCardModule, MatInputModule, MatSliderModule, MatSlideToggleModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+  MatMenuModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatToolbarModule
+} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
@@ -27,6 +35,9 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatSliderModule,
     MatInputModule,
     MatCardModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatButtonModule,
     ReactiveFormsModule,
   ],
   providers: [],

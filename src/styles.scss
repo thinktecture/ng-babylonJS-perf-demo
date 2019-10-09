@@ -12,13 +12,8 @@ body {
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-rows: 3rem auto;
-  grid-template-columns: auto 20rem;
-
-  &.slim {
-    grid-template-rows: 3rem auto;
-    grid-template-columns: auto 0;
-  }
+  grid-template-rows: 4rem;
+  grid-template-columns: auto;
 
   .content {
     grid-column: 1;
@@ -27,31 +22,29 @@ body {
 
   .nav {
     grid-column-start: 1;
-    grid-column-end: 3;
     grid-row: 1;
+
+    a {
+      margin: 0 .5rem;
+    }
   }
-
-  .prefPane {
-    grid-column: 2;
-    grid-row: 2;
-    overflow: scroll;
-  }
-
-
 }
 
-#prefToggle {
+.prefPane {
+  top: 0;
+  right: 0;
   position: fixed;
-  top: 4rem;
-  right: 1rem;
-  font-size: 3rem;
-  line-height: 3rem;
-  text-decoration: none;
-  cursor: pointer;
-  border: white solid 1px;
-  border-radius: 0.5rem;
-  padding: 0 0.5rem;
+  height: 100vh;
+  width: 20rem;
+  overflow: scroll;
+  transition: .25s;
+  transform: translateX(100%);
   background-color: white;
+
+  &.hidden {
+    transform: translateX(0);
+    transition: .25s;
+  }
 }
 
 .wrapper {

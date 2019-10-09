@@ -1,14 +1,18 @@
-<span id="prefToggle" (click)="showPrefPane = !showPrefPane">&#9776;</span>
-<div class="container" [class.slim]="showPrefPane">
-  <div class="nav">
-    <a [routerLink]="['naive']">1. Naive</a> -
-    <a [routerLink]="['meshOpti']">2. Add mesh optimization to 1.</a>-
-    <a [routerLink]="['instanceOpti']">3. Mesh instances optimization to 2.</a>
-  </div>
+<div class="container">
+  <mat-toolbar class="nav">
+    <mat-toolbar-row>
+      <a mat-raised-button [routerLink]="['naive']">Unoptimized</a>
+      <a mat-raised-button [routerLink]="['meshOpti']">Mesh Optimized</a>
+      <a mat-raised-button [routerLink]="['instanceOpti']">Mesh Instances</a>
+      <span style="flex: 1 1 auto;"></span>
+      <button style="z-index: 10" mat-raised-button color="accent" (click)="showPrefPane = !showPrefPane">&#9776;</button>
+    </mat-toolbar-row>
+  </mat-toolbar>
   <div class="content">
     <router-outlet></router-outlet>
   </div>
-  <div class="prefPane">
-    <app-preference-pane></app-preference-pane>
-  </div>
 </div>
+<div class="prefPane" [class.hidden]="showPrefPane">
+  <app-preference-pane></app-preference-pane>
+</div>
+
