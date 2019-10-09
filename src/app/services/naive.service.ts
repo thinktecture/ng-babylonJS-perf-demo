@@ -57,11 +57,12 @@ export class NaiveService extends BasicRenderServiceAbstract {
     const sphereMaterial = new StandardMaterial('sun_surface', this.scene);
     sphereMaterial.emissiveColor = new Color3(1, 0.8, 0);
     this.sun.material = sphereMaterial;
+    this.sun.parent = this.rootMesh;
 
     this.scene.registerAfterRender(() => {
       this.sun.rotate(
-        new Vector3(0.3, 1, 0),
-        0.0007,
+        new Vector3(0, 1, 0),
+        0.0004,
         Space.LOCAL
       );
     });

@@ -58,4 +58,12 @@ export class PreferencePaneComponent implements OnInit, OnDestroy {
     this.destroy.next(true);
   }
 
+  formatLabel(value: number) {
+    if (value >= 1000) {
+      return (value / 1000).toFixed(1) + 'k';
+    }
+
+    return value;
+  }
+
 }
