@@ -1,12 +1,11 @@
 <h1>Optimizations</h1>
 <mat-card [formGroup]="asteroidForm">
-
-  <h2 mat-card-title >Asteroids</h2>
-  <mat-label>Amount</mat-label>
+  <h2 mat-card-title>{{asteroidForm.value.amount | number:'4.0' }} Asteroids</h2>
+  <mat-label></mat-label>
+<!--    [displayWith]="formatLabel"-->
+<!--    thumbLabel-->
   <mat-slider
     formControlName="amount"
-    thumbLabel
-    [displayWith]="formatLabel"
     tickInterval="50"
     min="1"
     max="10000"></mat-slider>

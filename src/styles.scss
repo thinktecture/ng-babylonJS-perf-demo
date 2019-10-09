@@ -1,12 +1,11 @@
-@import '@angular/material/prebuilt-themes/purple-green.css';
 
-
-/* You can add global styles to this file, and also import other style files */
 body {
   height: 100vh;
   padding: 0;
   margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
 
 .container {
   height: 100%;
@@ -58,11 +57,10 @@ body {
   width: 100%;
 }
 
-html, body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+#fpsLabel {
+  position: absolute;
+  left: 2rem;
+  top: 5rem;
+  color: #999;
+  cursor: default;
 }

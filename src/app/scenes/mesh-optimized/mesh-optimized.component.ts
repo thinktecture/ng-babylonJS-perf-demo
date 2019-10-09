@@ -64,9 +64,11 @@ export class MeshOptimizedComponent extends NaiveComponent {
     for (let i = 0; i < amount; i += groupSize) { // DAS KLAPPT :)  5 - 10 fps
       const upper = i + groupSize > this.asteroids.length ? this.asteroids.length : i + groupSize;
       const mergedMesh = Mesh.MergeMeshes(this.asteroids.slice(i, upper) as Mesh[], true);
-      mergedMesh.parent = this.naive.sun;
-      this.naive.addRandomMaterial(mergedMesh);
-      merged.push(mergedMesh);
+      if (mergedMesh) {
+        mergedMesh.parent = this.naive.sun;
+        this.naive.addRandomMaterial(mergedMesh);
+        merged.push(mergedMesh);
+      }
     }
     this.clearAsteroids();
     this.asteroids.push(...merged);

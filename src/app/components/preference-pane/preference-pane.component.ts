@@ -60,7 +60,7 @@ export class PreferencePaneComponent implements OnInit, OnDestroy {
 
   formatLabel(value: number) {
     if (value >= 1000) {
-      return (value / 1000).toFixed(1) + 'k';
+      return '~' + (value / 1000).toFixed(1) + 'k';
     }
 
     return value;

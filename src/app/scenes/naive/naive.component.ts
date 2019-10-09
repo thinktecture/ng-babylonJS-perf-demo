@@ -72,6 +72,10 @@ export class NaiveComponent implements AfterViewInit, OnDestroy, OnInit {
     setTimeout(() => {
       this.addAsteroids(this.naive.scene, this.asteroidConfig.amount);
 
+      if (this.preferences.materialConfig.getValue().freeze) {
+        this.naive.scene.freezeMaterials();
+      }
+
       if (this.meshConfig.freeze) {
         this.loading.message$.next('Freeze Meshes ...');
         this.naive.scene.freezeActiveMeshes(); // 5-10 fps

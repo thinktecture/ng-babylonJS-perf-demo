@@ -1,4 +1,4 @@
-import {ElementRef, Injectable, NgZone} from '@angular/core';
+import {ElementRef, Inject, Injectable, NgZone} from '@angular/core';
 import {BasicRenderServiceAbstract} from './basic-render-service.abstract';
 import {
   Animation,
@@ -14,6 +14,8 @@ import {
   StandardMaterial,
   Vector3
 } from '@babylonjs/core';
+import {DOCUMENT} from '@angular/common';
+import {PreferenceService} from './preference.service';
 
 const FPS = 60;
 
@@ -37,8 +39,8 @@ export class NaiveService extends BasicRenderServiceAbstract {
     {frame: FPS, value: -1},
   ];
 
-  constructor(readonly zone: NgZone) {
-    super(zone);
+  constructor(readonly zone: NgZone, @Inject(DOCUMENT) readonly doc: Document) {
+    super(zone, document);
     this.rotationAnim.setKeys(this.rotationKeys);
     this.wobbleAnim.setKeys(this.wobbleKeys);
   }

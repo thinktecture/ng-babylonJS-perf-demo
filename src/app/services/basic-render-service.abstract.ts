@@ -26,7 +26,7 @@ export class BasicRenderServiceAbstract {
   rootMesh: Mesh;
   scene: Scene;
 
-  public constructor(private readonly ngZone: NgZone) {
+  public constructor(private readonly ngZone: NgZone, private document: Document) {
   }
 
   createScene(canvas: ElementRef<HTMLCanvasElement>): void {
@@ -111,7 +111,6 @@ export class BasicRenderServiceAbstract {
     canvas.nativeElement.addEventListener('pointerup', () => {
       clicked = false;
     });
-
   }
 
   start(inZone = true): void {
@@ -136,8 +135,13 @@ export class BasicRenderServiceAbstract {
 
   private startTheEngine() {
     let freshRender = true;
+    const element = this.document.getElementById('fpsLabel');
+
     this.engine.runRenderLoop(() => {
       this.scene.render();
+      if (element) {
+        element.innerHTML = this.engine.getFps().toFixed() + ' fps';
+      }
       if (freshRender) {
         this.engine.resize();
         freshRender = false;
