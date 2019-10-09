@@ -1,11 +1,12 @@
 <div class="container">
   <mat-toolbar class="nav">
     <mat-toolbar-row>
-      <a mat-raised-button [routerLink]="['naive']">Unoptimized</a>
-      <a mat-raised-button [routerLink]="['meshOpti']">Mesh Optimized</a>
-      <a mat-raised-button [routerLink]="['instanceOpti']">Mesh Instances</a>
+      <a mat-raised-button [routerLink]="['naive']" routerLinkActive="activeRoute">Unoptimized</a>
+      <a mat-raised-button [routerLink]="['meshOpti']" routerLinkActive="activeRoute">Mesh Optimized</a>
+      <a mat-raised-button [routerLink]="['instanceOpti']" routerLinkActive="activeRoute">Mesh Instances</a>
       <span style="flex: 1 1 auto;"></span>
-      <button style="z-index: 10" mat-raised-button color="accent" (click)="showPrefPane = !showPrefPane">&#9776;</button>
+      <button style="z-index: 10" mat-raised-button color="accent" (click)="showPrefPane = !showPrefPane">&#9776;
+      </button>
     </mat-toolbar-row>
   </mat-toolbar>
   <div class="content">
