@@ -45,7 +45,7 @@ export class MeshOptimizedComponent extends NaiveComponent {
   addAsteroids(scene: Scene, amount: number) {
     const baseSphere = this.getBaseSphere();
 
-    this.loading.message$.next('Add Asteroids ...');
+    this.loading.message$.next('Adding Asteroids ...');
     for (let i = 0; i < amount; i++) {
       const asteroid = baseSphere.clone('instance' + i);
       this.asteroids.push(asteroid);

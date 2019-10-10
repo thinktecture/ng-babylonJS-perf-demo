@@ -62,12 +62,12 @@ export class NaiveComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   manageAsteroids() {
-    this.loading.message$.next('Manage Asteroids ...');
+    this.loading.message$.next('Managing Asteroids ...');
     this.naive.scene.unfreezeActiveMeshes();
     this.naive.scene.unfreezeMaterials();
     this.naive.scene.blockfreeActiveMeshesAndRenderingGroups = this.meshConfig.batch;
     this.clearAsteroids();
-    this.loading.message$.next('Add Asteroids ...');
+    this.loading.message$.next('Adding Asteroids ...');
     // due to the possible blocking calculation a timeout is needed to display the message
     setTimeout(() => {
       this.addAsteroids(this.naive.scene, this.asteroidConfig.amount);
@@ -77,7 +77,7 @@ export class NaiveComponent implements AfterViewInit, OnDestroy, OnInit {
       }
 
       if (this.meshConfig.freeze) {
-        this.loading.message$.next('Freeze Meshes ...');
+        this.loading.message$.next('Freezing Meshes ...');
         this.naive.scene.freezeActiveMeshes(); // 5-10 fps
       }
       // this.naive.scene.freeActiveMeshes(); // better dispose
@@ -88,7 +88,7 @@ export class NaiveComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   clearAsteroids() {
-    this.loading.message$.next('Remove Asteroids ...');
+    this.loading.message$.next('Removing Asteroids ...');
     this.asteroids.slice().forEach((asteroid) => {
       asteroid.dispose();
       this.asteroids.pop();
