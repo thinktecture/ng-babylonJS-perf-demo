@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NaiveService} from '../../services/naive.service';
+import {SolarSystem} from '../../services/solar-system.service';
 import {AbstractMesh, MeshBuilder, Scene} from '@babylonjs/core';
 import {PreferenceService} from '../../services/preference.service';
 import {combineLatest, Subject} from 'rxjs';
@@ -10,11 +10,10 @@ import {LoadingService} from '../../services/loading.service';
 const FPS = 60;
 
 @Component({
-  selector: 'app-naive',
-  templateUrl: './naive.component.html',
-  styleUrls: ['./naive.component.scss']
+  selector: 'app-unoptimized',
+  templateUrl: './unoptimized.component.html',
 })
-export class NaiveComponent implements AfterViewInit, OnDestroy, OnInit {
+export class UnoptimizedComponent implements AfterViewInit, OnDestroy, OnInit {
 
   @ViewChild('rCanvas', {static: true})
   canvasRef: ElementRef<HTMLCanvasElement>;
@@ -24,7 +23,7 @@ export class NaiveComponent implements AfterViewInit, OnDestroy, OnInit {
   protected readonly asteroids: AbstractMesh[] = [];
 
   constructor(
-    protected readonly naive: NaiveService,
+    protected readonly naive: SolarSystem,
     protected readonly preferences: PreferenceService,
     protected readonly loading: LoadingService) {
   }

@@ -1,13 +1,12 @@
 import {Component} from '@angular/core';
 import {AbstractMesh, Mesh, MeshBuilder, Scene} from '@babylonjs/core';
-import {NaiveComponent} from '../naive/naive.component';
+import {UnoptimizedComponent} from '../unoptimized/unoptimized.component';
 
 @Component({
   selector: 'app-mesh-optimized',
   templateUrl: './mesh-optimized.component.html',
-  styleUrls: ['./mesh-optimized.component.scss']
 })
-export class MeshOptimizedComponent extends NaiveComponent {
+export class MeshOptimizedComponent extends UnoptimizedComponent {
 
   initScene() {
     const scene = this.naive.createScene(this.canvasRef);

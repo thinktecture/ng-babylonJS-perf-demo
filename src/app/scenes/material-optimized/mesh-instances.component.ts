@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MeshOptimizedComponent} from '../mesh-optimized/mesh-optimized.component';
-import {AbstractMesh, MeshBuilder, Scene} from '@babylonjs/core';
+import {Scene} from '@babylonjs/core';
 
 @Component({
   selector: 'app-mesh-optimized',
-  templateUrl: './mesh-instances.component.html',
-  styleUrls: ['./mesh-instances.component.scss']
+  templateUrl: './mesh-instances.component.html'
 })
 export class MeshInstancesComponent extends MeshOptimizedComponent {
 

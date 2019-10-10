@@ -2,8 +2,8 @@
 <mat-card [formGroup]="asteroidForm">
   <h2 mat-card-title>{{asteroidForm.value.amount | number:'4.0' }} Asteroids</h2>
   <mat-label></mat-label>
-<!--    [displayWith]="formatLabel"-->
-<!--    thumbLabel-->
+  <!--    [displayWith]="formatLabel"-->
+  <!--    thumbLabel-->
   <mat-slider
     formControlName="amount"
     tickInterval="50"
@@ -11,10 +11,10 @@
     max="10000"></mat-slider>
   <mat-label>Divisions o.e. Asteroid</mat-label>
   <mat-slider formControlName="segments"
-    thumbLabel
-    tickInterval="1"
-    min="1"
-    max="32"></mat-slider>
+              thumbLabel
+              tickInterval="1"
+              min="1"
+              max="32"></mat-slider>
 </mat-card>
 <mat-card [formGroup]="meshForm">
   <h2 mat-card-title>Mesh</h2>

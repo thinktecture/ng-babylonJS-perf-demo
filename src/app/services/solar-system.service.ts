@@ -22,7 +22,7 @@ const FPS = 60;
 @Injectable({
   providedIn: 'root'
 })
-export class NaiveService extends BasicRenderServiceAbstract {
+export class SolarSystem extends BasicRenderServiceAbstract {
 
   sun: Mesh;
 

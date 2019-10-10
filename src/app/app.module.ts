@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {NaiveComponent} from './scenes/naive/naive.component';
+import {UnoptimizedComponent} from './scenes/unoptimized/unoptimized.component';
 import {MeshOptimizedComponent} from './scenes/mesh-optimized/mesh-optimized.component';
 import {MeshInstancesComponent} from './scenes/material-optimized/mesh-instances.component';
 import {PreferencePaneComponent} from './components/preference-pane/preference-pane.component';
@@ -23,7 +23,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 @NgModule({
   declarations: [
     AppComponent,
-    NaiveComponent,
+    UnoptimizedComponent,
     MeshOptimizedComponent,
     MeshInstancesComponent,
     PreferencePaneComponent,
