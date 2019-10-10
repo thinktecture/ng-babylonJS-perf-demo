@@ -19,7 +19,7 @@ export class MeshInstancesComponent extends MeshOptimizedComponent {
     for (let i = 0; i < amount; i++) {
       const asteroid = bases[i % 6].createInstance('instance' + i);
       this.asteroids.push(asteroid);
-      this.naive.makeAsteroid(asteroid, i);
+      this.solarSystem.makeAsteroid(asteroid, i);
     }
   }
 }

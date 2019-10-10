@@ -9,7 +9,7 @@ import {UnoptimizedComponent} from '../unoptimized/unoptimized.component';
 export class MeshOptimizedComponent extends UnoptimizedComponent {
 
   initScene() {
-    const scene = this.naive.createScene(this.canvasRef);
+    const scene = this.solarSystem.createScene(this.canvasRef);
     scene.blockfreeActiveMeshesAndRenderingGroups = true;
     this.addPlanets(scene);
     scene.blockfreeActiveMeshesAndRenderingGroups = false;
@@ -19,7 +19,7 @@ export class MeshOptimizedComponent extends UnoptimizedComponent {
     const baseSphere = MeshBuilder.CreateSphere('BaseSphere' + suffix, {
       segments: this.asteroidConfig.segments,
       diameter: 1
-    }, this.naive.scene);
+    }, this.solarSystem.scene);
     if (this.meshConfig.index) {
       baseSphere.convertToUnIndexedMesh();
     } // TEUER BEI VIELEN MESHES - 1-3fps
@@ -37,7 +37,7 @@ export class MeshOptimizedComponent extends UnoptimizedComponent {
     if (this.meshConfig.boundings) {
       baseSphere.doNotSyncBoundingInfo = true;
     } // 5-10 fps;
-    this.naive.addRandomMaterial(baseSphere);
+    this.solarSystem.addRandomMaterial(baseSphere);
     return baseSphere;
   }
 
@@ -48,7 +48,7 @@ export class MeshOptimizedComponent extends UnoptimizedComponent {
     for (let i = 0; i < amount; i++) {
       const asteroid = baseSphere.clone('instance' + i);
       this.asteroids.push(asteroid);
-      this.naive.makeAsteroid(asteroid, i);
+      this.solarSystem.makeAsteroid(asteroid, i);
       asteroid.isVisible = true;
     }
 
@@ -64,8 +64,8 @@ export class MeshOptimizedComponent extends UnoptimizedComponent {
       const upper = i + groupSize > this.asteroids.length ? this.asteroids.length : i + groupSize;
       const mergedMesh = Mesh.MergeMeshes(this.asteroids.slice(i, upper) as Mesh[], true);
       if (mergedMesh) {
-        mergedMesh.parent = this.naive.sun;
-        this.naive.addRandomMaterial(mergedMesh);
+        mergedMesh.parent = this.solarSystem.sun;
+        this.solarSystem.addRandomMaterial(mergedMesh);
         merged.push(mergedMesh);
       }
     }
