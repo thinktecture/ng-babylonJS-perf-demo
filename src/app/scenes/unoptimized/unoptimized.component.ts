@@ -1,11 +1,12 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {SolarSystem} from '../../services/solar-system.service';
-import {AbstractMesh, MeshBuilder, Scene} from '@babylonjs/core';
+import {AbstractMesh, ActionManager, ExecuteCodeAction, MeshBuilder, Scene} from '@babylonjs/core';
 import {PreferenceService} from '../../services/preference.service';
 import {combineLatest, Subject} from 'rxjs';
 import {debounceTime, takeUntil} from 'rxjs/operators';
 import {AsteroidConfiguration, MeshConfiguration} from '../../models';
 import {LoadingService} from '../../services/loading.service';
+import {InteractionService} from '../../services/interaction.service';
 
 const FPS = 60;
 
@@ -28,7 +29,9 @@ export class UnoptimizedComponent implements AfterViewInit, OnDestroy, OnInit {
   constructor(
     protected readonly solarSystem: SolarSystem,
     protected readonly preferences: PreferenceService,
-    protected readonly loading: LoadingService) {
+    protected readonly loading: LoadingService,
+    protected readonly interaction: InteractionService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -132,6 +135,12 @@ export class UnoptimizedComponent implements AfterViewInit, OnDestroy, OnInit {
     scene.beginAnimation(this.solarSystem.createPlanetInSystem('venus', .4, 5, [.9, .9, 0]), 0, FPS, true, 0.2);
     scene.beginAnimation(this.solarSystem.createPlanetInSystem('earth', .6, 6.1, [0, 0, 1]), 0, FPS, true, 0.12);
     scene.beginAnimation(this.solarSystem.createPlanetInSystem('mars', .5, 7.3, [1, 0, 0]), 0, FPS, true, 0.1);
-    scene.beginAnimation(this.solarSystem.createPlanetInSystem('jupyter', 1.3, 10.5, [.95, .95, .85]), 0, FPS, true, 0.05);
+
+    const jupyter = this.solarSystem.createPlanetInSystem('jupyter', 1.3, 10.5, [.95, .95, .85]);
+    jupyter.actionManager = new ActionManager(this.solarSystem.scene);
+    jupyter.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPickUpTrigger,
+      () => this.interaction.onJupyterClick.next())
+    );
+    scene.beginAnimation(jupyter, 0, FPS, true, 0.05);
   }
 }

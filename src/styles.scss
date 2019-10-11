@@ -24,7 +24,7 @@ body {
     grid-row: 1;
 
     a {
-      margin: 0 .5rem;
+      margin: 0 .2rem;
     }
   }
 }
@@ -59,8 +59,14 @@ body {
 
 #fpsLabel {
   position: absolute;
-  left: 2rem;
-  top: 5rem;
-  color: #999;
+  left: 1.5rem;
+  top: 4rem;
+  color: #7c7c7c;
   cursor: default;
+}
+
+#jupyterLabel {
+  position: absolute;
+  left: 1.5rem;
+  bottom: 2rem;
 }

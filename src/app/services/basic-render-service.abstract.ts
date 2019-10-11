@@ -48,14 +48,14 @@ export class BasicRenderServiceAbstract {
     // https://www.babylonjs-playground.com/#CGXLT#5
 
     let clicked = false;
-    let currentPosition = {x: 0, y: 0};
-    let currentRotation = {x: 0, y: 0};
+    const currentPosition = {x: 0, y: 0};
+    const currentRotation = {x: 0, y: 0};
     let mousemov = false;
     let framecount = 0;
-    let mxframecount = 120; //4 secs at 60 fps
-    let lastAngleDiff = {x: 0, y: 0};
-    let oldAngle = {x: 0, y: 0};
-    let newAngle = {x: 0, y: 0};
+    const mxframecount = 120; //4 secs at 60 fps
+    const lastAngleDiff = {x: 0, y: 0};
+    const oldAngle = {x: 0, y: 0};
+    const newAngle = {x: 0, y: 0};
 
 
     this.scene.beforeRender = () => {
@@ -157,19 +157,6 @@ export class BasicRenderServiceAbstract {
    */
   showWorldAxis(size: number) {
 
-    const makeTextPlane = (text: string, color: string, textSize: number) => {
-      const dynamicTexture = new DynamicTexture('DynamicTexture', 50, this.scene, true);
-      dynamicTexture.hasAlpha = true;
-      dynamicTexture.drawText(text, 5, 40, 'bold 36px Arial', color, 'transparent', true);
-      const plane = Mesh.CreatePlane('TextPlane', textSize, this.scene, true);
-      const material = new StandardMaterial('TextPlaneMaterial', this.scene);
-      material.backFaceCulling = false;
-      material.specularColor = new Color3(0, 0, 0);
-      material.diffuseTexture = dynamicTexture;
-      plane.material = material;
-
-      return plane;
-    };
 
     const axisX = Mesh.CreateLines(
       'axisX',
@@ -182,7 +169,7 @@ export class BasicRenderServiceAbstract {
     );
 
     axisX.color = new Color3(1, 0, 0);
-    const xChar = makeTextPlane('X', 'red', size / 10);
+    const xChar = this.makeTextPlane('X', 'red', size / 10);
     xChar.position = new Vector3(0.9 * size, -0.05 * size, 0);
 
     const axisY = Mesh.CreateLines(
@@ -195,7 +182,7 @@ export class BasicRenderServiceAbstract {
     );
 
     axisY.color = new Color3(0, 1, 0);
-    const yChar = makeTextPlane('Y', 'green', size / 10);
+    const yChar = this.makeTextPlane('Y', 'green', size / 10);
     yChar.position = new Vector3(0, 0.9 * size, -0.05 * size);
 
     const axisZ = Mesh.CreateLines(
@@ -208,8 +195,22 @@ export class BasicRenderServiceAbstract {
     );
 
     axisZ.color = new Color3(0, 0, 1);
-    const zChar = makeTextPlane('Z', 'blue', size / 10);
+    const zChar = this.makeTextPlane('Z', 'blue', size / 10);
     zChar.position = new Vector3(0, 0.05 * size, 0.9 * size);
+  }
+
+  makeTextPlane(text: string, color: string, textSize: number) {
+    const dynamicTexture = new DynamicTexture('DynamicTexture', 50, this.scene, true);
+    dynamicTexture.hasAlpha = true;
+    dynamicTexture.drawText(text, 5, 40, 'bold 36px Arial', color, 'transparent', true);
+    const plane = Mesh.CreatePlane('TextPlane', textSize, this.scene, true);
+    const material = new StandardMaterial('TextPlaneMaterial', this.scene);
+    material.backFaceCulling = false;
+    material.specularColor = new Color3(0, 0, 0);
+    material.diffuseTexture = dynamicTexture;
+    plane.material = material;
+
+    return plane;
   }
 
 }

@@ -1,11 +1,12 @@
 <app-loading-spinner></app-loading-spinner>
 <p id="fpsLabel"></p>
+<mat-card id="jupyterLabel">Jupyter Clicked: {{jClicked}}</mat-card>
 <div class="container">
   <mat-toolbar class="nav">
     <mat-toolbar-row>
       <a mat-raised-button [routerLink]="['naive']" routerLinkActive="activeRoute">Unoptimized</a>
-      <a mat-raised-button [routerLink]="['meshOpti']" routerLinkActive="activeRoute">Mesh Optimized</a>
-      <a mat-raised-button [routerLink]="['instanceOpti']" routerLinkActive="activeRoute">Mesh Instances</a>
+      <a mat-raised-button [routerLink]="['meshOpti']" routerLinkActive="activeRoute">Optimized</a>
+      <a mat-raised-button [routerLink]="['instanceOpti']" routerLinkActive="activeRoute">Instances</a>
       <span style="flex: 1 1 auto;"></span>
       <button style="z-index: 10" mat-raised-button color="accent" (click)="showPrefPane = !showPrefPane">&#9776;
       </button>
