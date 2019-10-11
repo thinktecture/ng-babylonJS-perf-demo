@@ -72,6 +72,7 @@ export class UnoptimizedComponent implements AfterViewInit, OnDestroy, OnInit {
   ngOnDestroy(): void {
     // stop the engine and clean up
     this.solarSystem.stop();
+    this.destroy.next(true);
   }
 
   manageAsteroids() {
