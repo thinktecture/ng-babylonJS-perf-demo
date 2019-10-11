@@ -7,12 +7,35 @@ import {UnoptimizedComponent} from '../unoptimized/unoptimized.component';
   templateUrl: './mesh-optimized.component.html',
 })
 export class MeshOptimizedComponent extends UnoptimizedComponent {
+  addAsteroids(scene: Scene, amount: number) {
+    const baseSphere = this.getBaseSphere();
 
-  initScene() {
-    const scene = this.solarSystem.createScene(this.canvasRef);
-    scene.blockfreeActiveMeshesAndRenderingGroups = true;
-    this.addPlanets(scene);
-    scene.blockfreeActiveMeshesAndRenderingGroups = false;
+    this.loading.message$.next('Adding Asteroids ...');
+    for (let i = 0; i < amount; i++) {
+      const asteroid = baseSphere.clone('instance' + i);
+      this.asteroids.push(asteroid);
+      this.solarSystem.makeAsteroid(asteroid, i);
+      asteroid.isVisible = true;
+    }
+
+    if (!this.meshConfig.merge) {
+      return;
+    }
+    // TODO better slicing
+    this.loading.message$.next('Grouping Asteroids ...');
+    const groupSize = 300;
+    const merged = [];
+    for (let i = 0; i < amount; i += groupSize) {
+      const upper = i + groupSize > this.asteroids.length ? this.asteroids.length : i + groupSize;
+      const mergedMesh = Mesh.MergeMeshes(this.asteroids.slice(i, upper) as Mesh[], true);
+      if (mergedMesh) {
+        mergedMesh.parent = this.solarSystem.sun;
+        this.solarSystem.addRandomMaterial(mergedMesh);
+        merged.push(mergedMesh);
+      }
+    }
+    this.clearAsteroids();
+    this.asteroids.push(...merged);
   }
 
   getBaseSphere(suffix = ''): Mesh {
@@ -39,37 +62,5 @@ export class MeshOptimizedComponent extends UnoptimizedComponent {
     } // 5-10 fps;
     this.solarSystem.addRandomMaterial(baseSphere);
     return baseSphere;
-  }
-
-  addAsteroids(scene: Scene, amount: number) {
-    const baseSphere = this.getBaseSphere();
-
-    this.loading.message$.next('Adding Asteroids ...');
-    for (let i = 0; i < amount; i++) {
-      const asteroid = baseSphere.clone('instance' + i);
-      this.asteroids.push(asteroid);
-      this.solarSystem.makeAsteroid(asteroid, i);
-      asteroid.isVisible = true;
-    }
-
-    if (!this.meshConfig.merge) {
-      return;
-    }
-    // TODO better slicing
-    // Mesh.MergeMeshes(asteroids, true, true); // TEUER!
-    this.loading.message$.next('Grouping Asteroids ...');
-    const groupSize = 300;
-    const merged = [];
-    for (let i = 0; i < amount; i += groupSize) { // DAS KLAPPT :)  5 - 10 fps
-      const upper = i + groupSize > this.asteroids.length ? this.asteroids.length : i + groupSize;
-      const mergedMesh = Mesh.MergeMeshes(this.asteroids.slice(i, upper) as Mesh[], true);
-      if (mergedMesh) {
-        mergedMesh.parent = this.solarSystem.sun;
-        this.solarSystem.addRandomMaterial(mergedMesh);
-        merged.push(mergedMesh);
-      }
-    }
-    this.clearAsteroids();
-    this.asteroids.push(...merged);
   }
 }
