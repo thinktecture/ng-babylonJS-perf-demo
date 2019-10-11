@@ -93,6 +93,7 @@ export class UnoptimizedComponent implements AfterViewInit, OnDestroy, OnInit {
       // by freezing the meshes and materials we can skip a lot of change observations
       // basically we tell the engine those things won't change
       if (this.preferences.materialConfig.getValue().freeze) {
+        this.loading.message$.next('Freezing Materials ...');
         this.solarSystem.scene.freezeMaterials();
       }
       if (this.meshConfig.freeze) {

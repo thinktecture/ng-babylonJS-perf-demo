@@ -34,7 +34,9 @@ export class MeshOptimizedComponent extends UnoptimizedComponent {
         merged.push(mergedMesh);
       }
     }
+    this.loading.message$.next('Clearing "single" asteroids ...');
     this.clearAsteroids();
+    this.loading.message$.next('Adding "merged" asteroids ...');
     this.asteroids.push(...merged);
   }
 
