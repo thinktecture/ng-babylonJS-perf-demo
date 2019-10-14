@@ -3,9 +3,9 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {UnoptimizedComponent} from './scenes/unoptimized/unoptimized.component';
-import {MeshOptimizedComponent} from './scenes/mesh-optimized/mesh-optimized.component';
-import {MeshInstancesComponent} from './scenes/material-optimized/mesh-instances.component';
+import {UnoptimizedComponent} from './scenes/1_unoptimized/unoptimized.component';
+import {MeshOptimizedComponent} from './scenes/2_optimized/mesh-optimized.component';
+import {MeshInstancesComponent} from './scenes/3_instance/mesh-instances.component';
 import {PreferencePaneComponent} from './components/preference-pane/preference-pane.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {

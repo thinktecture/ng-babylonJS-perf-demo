@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {SolarSystem} from '../../services/solar-system.service';
+import {SolarSystem} from '../solar-system.service';
 import {AbstractMesh, ActionManager, ExecuteCodeAction, MeshBuilder, Scene} from '@babylonjs/core';
 import {PreferenceService} from '../../services/preference.service';
 import {combineLatest, Subject} from 'rxjs';

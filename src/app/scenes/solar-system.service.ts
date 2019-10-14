@@ -15,7 +15,7 @@ import {
   Vector3
 } from '@babylonjs/core';
 import {DOCUMENT} from '@angular/common';
-import {PreferenceService} from './preference.service';
+import {PreferenceService} from '../services/preference.service';
 
 const FPS = 60;
 

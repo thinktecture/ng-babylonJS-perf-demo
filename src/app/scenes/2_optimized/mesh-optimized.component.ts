@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AbstractMesh, Mesh, MeshBuilder, Scene} from '@babylonjs/core';
-import {UnoptimizedComponent} from '../unoptimized/unoptimized.component';
+import {UnoptimizedComponent} from '../1_unoptimized/unoptimized.component';
 
 @Component({
   selector: 'app-mesh-optimized',
@@ -21,7 +21,7 @@ export class MeshOptimizedComponent extends UnoptimizedComponent {
     if (!this.meshConfig.merge) {
       return;
     }
-    // TODO better slicing
+
     this.loading.message$.next('Grouping Asteroids ...');
     const groupSize = 300;
     const merged = [];

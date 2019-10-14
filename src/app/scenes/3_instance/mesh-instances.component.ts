@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {MeshOptimizedComponent} from '../mesh-optimized/mesh-optimized.component';
+import {MeshOptimizedComponent} from '../2_optimized/mesh-optimized.component';
 import {Mesh, Scene} from '@babylonjs/core';
 
 @Component({
