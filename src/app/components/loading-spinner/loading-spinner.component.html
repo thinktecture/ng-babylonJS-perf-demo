@@ -1,0 +1,4 @@
+<div [@fade]="'in'" class="backdrop" *ngIf="loading.message$ | async as message">
+  <mat-progress-spinner color="accent" mode="indeterminate"></mat-progress-spinner>
+  <p>{{message}}</p>
+</div>

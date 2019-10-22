@@ -1,0 +1,39 @@
+<h1>Optimizations</h1>
+<mat-card [formGroup]="asteroidForm">
+  <h2 mat-card-title>{{asteroidForm.value.amount | number:'4.0' }} Asteroids</h2>
+  <mat-label></mat-label>
+  <!--    [displayWith]="formatLabel"-->
+  <!--    thumbLabel-->
+  <mat-slider
+    formControlName="amount"
+    tickInterval="50"
+    min="1"
+    max="10000"></mat-slider>
+  <mat-label>Divisions o.e. Asteroid</mat-label>
+  <mat-slider formControlName="segments"
+              thumbLabel
+              tickInterval="1"
+              min="1"
+              max="32"></mat-slider>
+</mat-card>
+<mat-card [formGroup]="meshForm">
+  <h2 mat-card-title>Mesh</h2>
+  <mat-slide-toggle formControlName="freeze">Freeze</mat-slide-toggle>
+  <mat-slide-toggle formControlName="merge">Merge into Groups</mat-slide-toggle>
+  <mat-slide-toggle formControlName="index">Unindexed Meshes</mat-slide-toggle>
+  <mat-slide-toggle formControlName="flat">Flat Shaded Meshes</mat-slide-toggle>
+  <mat-slide-toggle formControlName="normals">Freeze Normals</mat-slide-toggle>
+  <mat-slide-toggle formControlName="edge">Disable Edge Rendering</mat-slide-toggle>
+  <mat-slide-toggle formControlName="boundings">Sync Boundings</mat-slide-toggle>
+  <mat-slide-toggle formControlName="batch">Batch Create</mat-slide-toggle>
+</mat-card>
+
+<mat-card>
+  <h2 mat-card-title>Material</h2>
+  <mat-slide-toggle [formControl]="materialControl">Freeze</mat-slide-toggle>
+</mat-card>
+
+<mat-card>
+  <h2 mat-card-title>NgZone</h2>
+  <mat-slide-toggle [formControl]="zoneControl">Run in NgZone</mat-slide-toggle>
+</mat-card>

@@ -1,1 +1,72 @@
-/* You can add global styles to this file, and also import other style files */
+
+body {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 4rem;
+  grid-template-columns: auto;
+
+  .content {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .nav {
+    grid-column-start: 1;
+    grid-row: 1;
+
+    a {
+      margin: 0 .2rem;
+    }
+  }
+}
+
+.prefPane {
+  top: 0;
+  right: 0;
+  position: fixed;
+  height: 100vh;
+  width: 20rem;
+  overflow: scroll;
+  transition: .25s;
+  transform: translateX(100%);
+  background-color: white;
+
+  &.hidden {
+    transform: translateX(0);
+    transition: .25s;
+  }
+}
+
+.activeRoute {
+  background-color: #69f0ae;
+  color: black;
+  transition: .25s;
+}
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+#fpsLabel {
+  position: absolute;
+  left: 1.5rem;
+  top: 4rem;
+  color: #7c7c7c;
+  cursor: default;
+}
+
+#jupyterLabel {
+  position: absolute;
+  left: 1.5rem;
+  bottom: 2rem;
+}

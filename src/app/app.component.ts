@@ -1,10 +1,24 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {InteractionService} from './services/interaction.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'ng-babylonJS-perf-demo';
+export class AppComponent implements OnInit, OnDestroy {
+  jClicked = 0;
+  showPrefPane = false;
+  subscription: Subscription;
+
+  constructor(readonly interaction: InteractionService) {
+  }
+
+  ngOnInit() {
+    this.subscription = this.interaction.onJupyterClick.subscribe(() => this.jClicked++);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }
